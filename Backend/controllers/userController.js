@@ -70,8 +70,9 @@ async function loginUser(req, res) {
         username: user.username,
         email: user.email,
         role: user.role,
-        token: token
+        token
       },
+      token
     });
   } catch (err) {
     console.error("Login error:", err);
