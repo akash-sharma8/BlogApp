@@ -1,3 +1,4 @@
+import API from "../utils/api";
 import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
@@ -15,24 +16,19 @@ export const AuthProvider = ({ children }) => {
 
   // Login function
 const login = async (email, password) => {
-  const res = await fetch("http://localhost:5000/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Login failed");
+  const { data } = await API.post("/auth/login", { email, password });
 
   const userWithToken = {
     ...data.user,
-    token: data.token || data.user.token  };
+    token: data.token,
+  };
 
   setUser(userWithToken);
   localStorage.setItem("user", JSON.stringify(userWithToken));
 
   return data;
 };
+
 
 
   // Logout function
@@ -44,18 +40,15 @@ const logout = () => {
 
   // Register function
 const register = async (username, email, password) => {
-  const res = await fetch("http://localhost:5000/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, email, password }),
+  const { data } = await API.post("/auth/register", {
+    username,
+    email,
+    password,
   });
-
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Registration failed");
 
   const userWithToken = {
     ...data.user,
-    token: data.token
+    token: data.token,
   };
 
   setUser(userWithToken);
