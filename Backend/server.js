@@ -1,3 +1,7 @@
+const allowedOrigins = [
+  "https://blog-app-pi-seven-35.vercel.app",
+  "http://localhost:3000"
+];
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
