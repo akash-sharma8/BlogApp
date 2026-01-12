@@ -13,8 +13,9 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
-
+app.use(cors({
+  origin: "https://blog-app-pi-seven-35.vercel.app"
+}));
 
 
 app.use(express.json());
