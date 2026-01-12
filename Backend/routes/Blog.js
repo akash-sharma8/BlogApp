@@ -18,6 +18,8 @@ router.post('/blogs/:id/comment', authMiddleware, commentBlog);
 router.put('/blogs/:id', authMiddleware, updateBlog);
 
 router.delete('/blogs/:id', authMiddleware, deleteBlog);
-
+router.get('/blogs', (req, res) => {
+    res.json({ msg: "Blogs route works" });
+  });
 
 module.exports = router;
