@@ -13,13 +13,14 @@ const app = express();
 connectDB();
 
 // Middleware
+app.use(cors({
+  origin: "*"
+}));
+
+
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({
-    origin: "*",
-    credentials: true
-}));
 
 // Routes
 app.use("/api/auth", authRoutes);
