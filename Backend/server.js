@@ -14,7 +14,10 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: "https://blog-app-pi-seven-35.vercel.app", // or "*" for all
+  origin: [
+    "https://blog-app-pi-seven-35.vercel.app",
+    "http://localhost:3000"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
