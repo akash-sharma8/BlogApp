@@ -5,14 +5,14 @@ const API = axios.create({
   withCredentials: true,
 });
 
-API.interceptors.request.use(
-  (config) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user?.token) {
-      config.headers.Authorization = `Bearer ${user.token}`;
-    }
-    return config;
+API.interceptors.request.use((req) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user?.token) {
+    req.headers.Authorization = `Bearer ${user.token}`;
   }
-);
+
+  return req;
+});
 
 export default API;
