@@ -20,17 +20,8 @@ export default function Write() {
     }
 
     try {
-      // Include author info
-      const blogData = {
-        title,
-        content,
-        category,
-        author: user._id, // Backend should accept this
-      };
-
+      const blogData = { title, content, category, author: user._id };
       const res = await createBlog(blogData);
-
-      // Navigate to the newly created blog detail page
       navigate(`/blog/${res.data.blog._id}`);
     } catch (err) {
       console.error(err.response?.data || err.message);
@@ -39,34 +30,36 @@ export default function Write() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Write Blog</h1>
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-2xl mt-10 transition-all duration-500 ease-in-out hover:scale-[1.01]">
+      <h1 className="text-3xl font-extrabold mb-8 text-gray-800 text-center animate-fadeIn">
+        Write a New Blog
+      </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <input
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full border p-2 rounded"
+          className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm hover:shadow-md transition duration-300 ease-in-out"
         />
 
         <textarea
           placeholder="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-full border p-2 rounded h-40"
+          className="w-full border border-gray-300 p-3 rounded-xl h-48 resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm hover:shadow-md transition duration-300 ease-in-out"
         />
 
         <input
           placeholder="Category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full border p-2 rounded"
+          className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm hover:shadow-md transition duration-300 ease-in-out"
         />
 
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-green-600 text-white px-6 py-3 rounded-xl font-semibold w-full hover:bg-green-700 hover:scale-105 transition-transform duration-300 ease-in-out shadow-md hover:shadow-lg"
         >
           Publish
         </button>

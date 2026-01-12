@@ -1,14 +1,21 @@
-import { useState, useContext } from "react";
+import { useState, useContext,useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { login } = useContext(AuthContext); // use context login
+const { login, user } = useContext(AuthContext);
+
   const navigate = useNavigate();
+
+useEffect(() => {
+    if (user) {
+      navigate("/"); // or "/profile" or "/myblogs" wherever you want
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,50 +23,82 @@ export default function Login() {
     setError("");
 
     try {
-      await login(email, password); // context handles API call, storing user & token
-      navigate("/"); // redirect after successful login
+      await login(email, password);
+      navigate("/");
     } catch (err) {
-      setError(err.message || "Login failed!"); // show error message
+      setError(err.message || "Login failed!");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen text-black flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen text-black flex items-center justify-center 
+                    bg-gradient-to-br from-blue-50 to-green-50">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-full max-w-md space-y-4"
+        className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg
+                   animate-fadeIn"
       >
-        <h2 className="text-2xl font-bold text-center">Login</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Welcome Back 
+        </h2>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {/* Error */}
+        {error && (
+          <p className="mb-4 text-center text-red-500 bg-red-50 py-2 rounded
+                        animate-shake">
+            {error}
+          </p>
+        )}
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        {/* Email */}
+        <div className="mb-4">
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full px-4 py-3 border rounded-lg outline-none
+                       focus:ring-2 focus:ring-blue-500
+                       transition"
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        {/* Password */}
+        <div className="mb-6">
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full px-4 py-3 border rounded-lg outline-none
+                       focus:ring-2 focus:ring-blue-500
+                       transition"
+          />
+        </div>
 
+        {/* Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium
+                     hover:bg-blue-700 active:scale-95
+                     transition-all duration-300
+                     disabled:opacity-50"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-gray-600 mt-6">
+          Don’t have an account?{" "}
+          <Link to="/register" className="text-blue-600 font-medium hover:underline">
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );

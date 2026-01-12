@@ -29,13 +29,32 @@ export default function Profile() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">{user.username}'s Blogs</h1>
-      <div className="grid md:grid-cols-3 gap-6">
-        {blogs.map((blog) => (
-          <BlogCard key={blog._id} blog={blog} user={user} onDelete={handleDelete} onLike={handleLike} />
-        ))}
-      </div>
+    <div className="max-w-6xl mx-auto p-6">
+      <h1 className="text-4xl font-extrabold mb-8 text-gray-800 text-center animate-fadeIn">
+        {user.username}'s Blogs
+      </h1>
+
+      {blogs.length === 0 ? (
+        <p className="text-center text-gray-500 mt-10 animate-fadeIn">
+          You haven’t written any blogs yet.
+        </p>
+      ) : (
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogs.map((blog) => (
+            <div
+              key={blog._id}
+              className="transition-transform duration-300 hover:scale-105 hover:shadow-xl rounded-xl"
+            >
+              <BlogCard
+                blog={blog}
+                user={user}
+                onDelete={handleDelete}
+                onLike={handleLike}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../../utils/authApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Register() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -8,16 +8,13 @@ export default function Register() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Handle input changes
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!form.username || !form.email || !form.password) {
       setError("All fields are required");
       return;
@@ -27,68 +24,105 @@ export default function Register() {
     setError("");
 
     try {
-      // registerUser returns a promise from Axios
       const response = await registerUser(form);
 
-      // Axios response data is in response.data
       if (response.data?.success) {
-        alert("Registration successful! Please login.");
         navigate("/login");
       } else {
         setError(response.data?.message || "Registration failed");
       }
     } catch (err) {
-      // Axios error
-      setError(err.response?.data?.message || err.message || "Something went wrong");
+      setError(
+        err.response?.data?.message ||
+        err.message ||
+        "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-md mx-auto text-black p-6 space-y-4 bg-white shadow rounded"
-    >
-      <h2 className="text-2xl font-bold text-center">Register</h2>
-
-      {error && <p className="text-red-500 text-center">{error}</p>}
-
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        value={form.username}
-        onChange={handleChange}
-        className="w-full border px-3 py-2 rounded"
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={form.email}
-        onChange={handleChange}
-        className="w-full border px-3 py-2 rounded"
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={form.password}
-        onChange={handleChange}
-        className="w-full border px-3 py-2 rounded"
-        required
-      />
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="bg-green-600 text-white w-full px-4 py-2 rounded disabled:opacity-50"
+    <div className="min-h-screen text-black   flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white p-8  rounded-2xl shadow-lg
+                   animate-fadeIn"
       >
-        {loading ? "Registering..." : "Register"}
-      </button>
-    </form>
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Create Account
+        </h2>
+
+        {/* Error */}
+        {error && (
+          <p className="mb-4 text-center text-red-500 bg-red-50 py-2 rounded
+                        animate-shake">
+            {error}
+          </p>
+        )}
+
+        {/* Username */}
+        <div className="mb-4">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg outline-none
+                       focus:ring-2 focus:ring-green-500
+                       transition"
+          />
+        </div>
+
+        {/* Email */}
+        <div className="mb-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg outline-none
+                       focus:ring-2 focus:ring-green-500
+                       transition"
+          />
+        </div>
+
+        {/* Password */}
+        <div className="mb-6">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg outline-none
+                       focus:ring-2 focus:ring-green-500
+                       transition"
+          />
+        </div>
+
+        {/* Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-green-600 text-white py-3 rounded-lg font-medium
+                     hover:bg-green-700 active:scale-95
+                     transition-all duration-300
+                     disabled:opacity-50"
+        >
+          {loading ? "Creating account..." : "Register"}
+        </button>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-gray-600 mt-6">
+          Already have an account?{" "}
+          <Link to="/login" className="text-green-600 font-medium hover:underline">
+            Login
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 }

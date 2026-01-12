@@ -1,9 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function Navbar() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -12,42 +12,82 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-zinc-600 w-full shadow-md py-4 px-4">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="sticky top-0 z-50 backdrop-blur bg-zinc-900/80 shadow-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <NavLink
+          to="/"
+          className="text-2xl font-bold text-white tracking-wide hover:text-blue-400 transition"
+        >
+          BlogApp
+        </NavLink>
 
-        {/* Logo → Home */}
-        <Link to="/" className="text-xl font-bold text-white">
-          Home
-        </Link>
+        {!loading && (
+          <div className="flex items-center gap-6 text-white text-sm font-medium">
+            {user ? (
+              <>
+                <NavLink
+                  to="/write"
+                  className={({ isActive }) =>
+                    `relative after:absolute after:left-0 after:-bottom-1
+                     after:h-[2px] after:bg-blue-400 after:transition-all
+                     ${isActive ? "after:w-full text-blue-400" : "after:w-0 hover:after:w-full"}`
+                  }
+                >
+                  Write
+                </NavLink>
 
-        <div className="space-x-4 text-white">
-          {user ? (
-            <>
-              <Link to="/write" className="hover:text-blue-400">Write</Link>
+                <NavLink
+                  to="/myblogs"
+                  className={({ isActive }) =>
+                    `relative after:absolute after:left-0 after:-bottom-1
+                     after:h-[2px] after:bg-blue-400 after:transition-all
+                     ${isActive ? "after:w-full text-blue-400" : "after:w-0 hover:after:w-full"}`
+                  }
+                >
+                  My Blogs
+                </NavLink>
 
-              {/* My Blogs */}
-              <Link to="/myblogs" className="hover:text-blue-400">
-                My Blogs
-              </Link>
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded-full
+                     bg-white/10 hover:bg-white/20 transition
+                     ${isActive ? "ring-2 ring-blue-400" : ""}`
+                  }
+                >
+                  👤 {user.username}
+                </NavLink>
 
-              <Link to="/profile" className="hover:text-blue-400">
-                {user.username}
-              </Link>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-1 rounded-full border border-red-400 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    `relative after:absolute after:left-0 after:-bottom-1
+                     after:h-[2px] after:bg-blue-400 after:transition-all
+                     ${isActive ? "after:w-full text-blue-400" : "after:w-0 hover:after:w-full"}`
+                  }
+                >
+                  Login
+                </NavLink>
 
-              <button
-                onClick={handleLogout}
-                className="hover:text-red-400"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="hover:text-blue-400">Login</Link>
-              <Link to="/register" className="hover:text-blue-400">Register</Link>
-            </>
-          )}
-        </div>
+                <NavLink
+                  to="/register"
+                  className="px-4 py-1 rounded-full bg-blue-500 hover:bg-blue-600 transition-all duration-300"
+                >
+                  Register
+                </NavLink>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   );

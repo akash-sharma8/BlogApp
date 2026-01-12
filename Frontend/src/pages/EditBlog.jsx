@@ -26,25 +26,32 @@ export default function EditBlog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await updateBlog(id, { title, content });
-    navigate(`/blog/${id}`);
+    navigate(`/`);
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Edit Blog</h1>
+    <div className="max-w-3xl text-black mx-auto p-6 bg-white shadow-lg rounded-xl mt-10 transition-all duration-500 ease-in-out transform hover:scale-105">
+      <h1 className="text-3xl font-extrabold mb-6 text-gray-800 text-center animate-fadeIn">
+        Edit Blog
+      </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full border p-2 rounded"
+          placeholder="Enter blog title"
+          className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out shadow-sm hover:shadow-md"
         />
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-full border p-2 rounded h-40"
+          placeholder="Write your content here..."
+          className="w-full border border-gray-300 p-3 rounded-xl h-48 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out shadow-sm hover:shadow-md"
         />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold w-full hover:bg-blue-700 hover:scale-105 transition-transform duration-300 ease-in-out shadow-md hover:shadow-lg"
+        >
           Update
         </button>
       </form>

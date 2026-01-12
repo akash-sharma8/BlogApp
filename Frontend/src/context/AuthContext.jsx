@@ -26,8 +26,7 @@ const login = async (email, password) => {
 
   const userWithToken = {
     ...data.user,
-    token: data.user.token // ✅ IMPORTANT
-  };
+    token: data.token || data.user.token  };
 
   setUser(userWithToken);
   localStorage.setItem("user", JSON.stringify(userWithToken));
