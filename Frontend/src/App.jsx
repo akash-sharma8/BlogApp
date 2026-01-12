@@ -11,7 +11,7 @@ import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import BlogDetail from "./pages/BlogDetail";
 import EditBlog from './pages/EditBlog';
-import MyBlogs from './pages/MyBLogs';
+import MyBlogs from './pages/MyBlogs';
 
 
 // Auth
