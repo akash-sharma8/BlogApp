@@ -1,7 +1,4 @@
-const allowedOrigins = [
-  "https://blog-app-pi-seven-35.vercel.app",
-  "http://localhost:3000"
-];
+
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -17,13 +14,21 @@ const app = express();
 connectDB();
 
 // Middleware
+const allowedOrigins = [
+  "https://blog-app-pi-seven-35.vercel.app",
+  "http://localhost:3000"
+];
+
 app.use(cors({
-  origin: [
-    "https://blog-app-pi-seven-35.vercel.app",
-    "http://localhost:3000"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
 app.use(express.json());
