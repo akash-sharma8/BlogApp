@@ -12,7 +12,7 @@ const app = express();
 
 // DB
 connectDB();
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
+// console.log("MONGODB_URI:", process.env.MONGODB_URI);
 
 // Middleware
 
