@@ -4,12 +4,12 @@ async function authMiddleware(req, res, next) {
   try {
     let token;
 
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
-    ) {
+    // Check Authorization header
+    if (req.headers.authorization?.startsWith("Bearer ")) {
       token = req.headers.authorization.split(" ")[1];
-    } else if (req.cookies && req.cookies.token) {
+    }
+    // Check cookies
+    else if (req.cookies?.token) {
       token = req.cookies.token;
     }
 
@@ -17,6 +17,7 @@ async function authMiddleware(req, res, next) {
       return res.status(401).json({ message: "Authentication token missing" });
     }
 
+    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = {
