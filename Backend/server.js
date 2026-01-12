@@ -25,11 +25,9 @@ app.use(cookieParser());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/blog", blogRoutes);
-app.use((req, res, next) => {
-  console.log("Incoming request:", req.originalUrl);
-  next();
+app.get("/api/test", (req, res) => {
+  res.json({ message: "Backend is live" });
 });
-
 
 const PORT = process.env.PORT || 5000;
 
