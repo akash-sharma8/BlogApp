@@ -14,22 +14,16 @@ const app = express();
 connectDB();
 
 // Middleware
-const allowedOrigins = [
-  "https://blog-app-pi-seven-35.vercel.app",
-  "http://localhost:3000"
-];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"]
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://blog-app-pi-seven-35.vercel.app"
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
