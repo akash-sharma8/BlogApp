@@ -14,7 +14,7 @@ export default function Navbar() {
   };
 
   const linkStyle = ({ isActive }) =>
-    `relative text-sm font-medium transition-all duration-300
+    `text-sm font-medium transition-colors duration-300
      ${isActive ? "text-indigo-400" : "text-slate-300 hover:text-white"}`;
 
   return (
@@ -29,17 +29,9 @@ export default function Navbar() {
           BlogApp
         </NavLink>
 
-        {/* Mobile Button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-white text-3xl transition-transform duration-300"
-        >
-          {menuOpen ? "✕" : "☰"}
-        </button>
-
         {/* Desktop Menu */}
         {!loading && (
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden sm:flex items-center gap-6">
             {user ? (
               <>
                 <NavLink to="/write" className={linkStyle}>Write</NavLink>
@@ -49,7 +41,7 @@ export default function Navbar() {
                   to="/profile"
                   className="flex items-center gap-2 bg-slate-800 px-4 py-1.5 rounded-full hover:bg-slate-700 transition"
                 >
-                  <span className="text-sm">👤 {user.username}</span>
+                  👤 <span>{user.username}</span>
                 </NavLink>
 
                 <button
@@ -61,33 +53,43 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <NavLink to="/login" className={linkStyle}>Login</NavLink>
+                <NavLink to="/login" className={linkStyle}>
+                  Login
+                </NavLink>
+
                 <NavLink
                   to="/register"
-                  className="bg-indigo-600 px-5 py-2 rounded-xl text-white font-semibold hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20"
+                  className="bg-indigo-600 px-5 py-2 rounded-xl text-white font-semibold hover:bg-indigo-500 transition shadow-md"
                 >
-                  Get Started
+                  Sign Up
                 </NavLink>
               </>
             )}
           </div>
         )}
+
+        {/* Mobile Button */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="sm:hidden text-white text-3xl"
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Overlay */}
       <div
-        className={`md:hidden fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300
+        className={`sm:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300
         ${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
         onClick={() => setMenuOpen(false)}
       />
 
-      {/* Mobile Slide Menu */}
+      {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed top-16 right-0 w-72 h-[calc(100vh-4rem)]
-        bg-slate-900 border-l border-slate-800 p-6
-        flex flex-col gap-6
+        className={`sm:hidden fixed top-16 right-0 w-72 h-[calc(100vh-4rem)]
+        bg-slate-900 border-l border-slate-800 p-6 flex flex-col gap-6
         transform transition-all duration-300 ease-out
-        ${menuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
+        ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         {user ? (
           <>
@@ -108,7 +110,7 @@ export default function Navbar() {
 
             <button
               onClick={handleLogout}
-              className="mt-auto text-red-400 hover:text-red-300 transition"
+              className="mt-auto text-red-400 hover:text-red-300"
             >
               🚪 Logout
             </button>
@@ -118,12 +120,13 @@ export default function Navbar() {
             <NavLink to="/login" className={linkStyle} onClick={() => setMenuOpen(false)}>
               Login
             </NavLink>
+
             <NavLink
               to="/register"
               className="bg-indigo-600 px-5 py-2 rounded-xl text-center text-white font-semibold hover:bg-indigo-500 transition"
               onClick={() => setMenuOpen(false)}
             >
-              Get Started
+              Sign Up
             </NavLink>
           </>
         )}
