@@ -32,7 +32,7 @@ export default function Navbar() {
 
       {/* Desktop Menu (visible from md and up) */}
       {!loading && (
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="md:flex items-center space-x-6">
           {user ? (
             <>
               <NavLink to="/write" className={linkStyle}>Write</NavLink>
