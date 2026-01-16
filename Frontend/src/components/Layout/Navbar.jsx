@@ -1,88 +1,58 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function Navbar() {
   const { user, logout, loading } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false); // For Mobile View
 
   const handleLogout = () => {
     logout();
+    setMenuOpen(false);
     navigate("/");
   };
 
+  // Simplified link style function
+  const linkStyle = ({ isActive }) => 
+    `transition-all duration-300 ${isActive ? "text-indigo-400" : "text-slate-300 hover:text-white"}`;
+
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur bg-zinc-900/80 shadow-md">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <NavLink
-          to="/"
-          className="text-2xl font-bold text-white tracking-wide hover:text-blue-400 transition"
-        >
+    <nav className="sticky top-0 z-50 bg-[#0f172a]/80 backdrop-blur-md border-b border-slate-800">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+        
+        {/* Brand Logo */}
+        <NavLink to="/" className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
           BlogApp
         </NavLink>
 
+        {/* Mobile Menu Button */}
+        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white text-2xl">
+          {menuOpen ? "✕" : "☰"}
+        </button>
+
+        {/* Navigation Links */}
         {!loading && (
-          <div className="flex items-center gap-6 text-white text-sm font-medium">
+          <div className={`${menuOpen ? "flex" : "hidden"} md:flex absolute md:static top-16 left-0 w-full md:w-auto bg-[#0f172a] md:bg-transparent flex-col md:flex-row items-center gap-6 p-6 md:p-0 border-b border-slate-800 md:border-none transition-all`}>
             {user ? (
               <>
-                <NavLink
-                  to="/write"
-                  className={({ isActive }) =>
-                    `relative after:absolute after:left-0 after:-bottom-1
-                     after:h-[2px] after:bg-blue-400 after:transition-all
-                     ${isActive ? "after:w-full text-blue-400" : "after:w-0 hover:after:w-full"}`
-                  }
-                >
-                  Write
+                <NavLink to="/write" className={linkStyle} onClick={() => setMenuOpen(false)}>Write</NavLink>
+                <NavLink to="/myblogs" className={linkStyle} onClick={() => setMenuOpen(false)}>My Blogs</NavLink>
+                
+                {/* Profile Pill */}
+                <NavLink to="/profile" className="flex items-center gap-2 bg-slate-800 px-4 py-1.5 rounded-full hover:bg-slate-700 transition" onClick={() => setMenuOpen(false)}>
+                  <span className="text-sm">👤 {user.username}</span>
                 </NavLink>
 
-                <NavLink
-                  to="/myblogs"
-                  className={({ isActive }) =>
-                    `relative after:absolute after:left-0 after:-bottom-1
-                     after:h-[2px] after:bg-blue-400 after:transition-all
-                     ${isActive ? "after:w-full text-blue-400" : "after:w-0 hover:after:w-full"}`
-                  }
-                >
-                  My Blogs
-                </NavLink>
-
-                <NavLink
-                  to="/profile"
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 px-3 py-1 rounded-full
-                     bg-white/10 hover:bg-white/20 transition
-                     ${isActive ? "ring-2 ring-blue-400" : ""}`
-                  }
-                >
-                  👤 {user.username}
-                </NavLink>
-
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-1 rounded-full border border-red-400 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300"
-                >
+                <button onClick={handleLogout} className="text-red-400 hover:text-red-300 font-medium transition">
                   Logout
                 </button>
               </>
             ) : (
               <>
-                <NavLink
-                  to="/login"
-                  className={({ isActive }) =>
-                    `relative after:absolute after:left-0 after:-bottom-1
-                     after:h-[2px] after:bg-blue-400 after:transition-all
-                     ${isActive ? "after:w-full text-blue-400" : "after:w-0 hover:after:w-full"}`
-                  }
-                >
-                  Login
-                </NavLink>
-
-                <NavLink
-                  to="/register"
-                  className="px-4 py-1 rounded-full bg-blue-500 hover:bg-blue-600 transition-all duration-300"
-                >
-                  Register
+                <NavLink to="/login" className={linkStyle} onClick={() => setMenuOpen(false)}>Login</NavLink>
+                <NavLink to="/register" className="bg-indigo-600 px-5 py-2 rounded-xl text-white font-bold hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20" onClick={() => setMenuOpen(false)}>
+                  Get Started
                 </NavLink>
               </>
             )}

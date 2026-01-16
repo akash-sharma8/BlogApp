@@ -50,81 +50,69 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-200 selection:bg-indigo-500/30">
-      {/* Decorative Background Elements */}
+    // 'selection:bg-indigo-500/30' is great for desktop, 'overflow-x-hidden' is vital for mobile
+    <div className="min-h-screen bg-[#0f172a] text-slate-200 overflow-x-hidden pb-12">
+      
+      {/* 1. Mobile-Optimized Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-indigo-600/10 blur-[120px]" />
-        <div className="absolute top-[20%] -right-[10%] w-[30%] h-[30%] rounded-full bg-purple-600/10 blur-[100px]" />
+        <div className="absolute -top-[5%] -left-[10%] w-[70%] h-[30%] rounded-full bg-indigo-600/20 blur-[80px] md:blur-[120px]" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[60%] h-[30%] rounded-full bg-purple-600/15 blur-[80px] md:blur-[100px]" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-16">
-        {/* Header Section */}
+      <div className="relative max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-16">
+        
+        {/* 2. Header: Smaller font sizes for mobile to prevent weird wrapping */}
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-16 text-center"
+          transition={{ duration: 0.6 }}
+          className="mb-10 md:mb-16 text-center"
         >
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+          <h1 className="text-3xl md:text-6xl font-extrabold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 leading-tight">
             Explore Blogs
           </h1>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto px-4">
             Discover stories, thinking, and expertise from writers on any topic.
           </p>
         </motion.div>
 
-        {/* Loading State */}
+        {/* 3. Loading State: Skeleton height adjusted for small screens */}
         {loading && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="h-80 rounded-2xl bg-slate-800/50 border border-slate-700/50 animate-pulse flex flex-col p-6 space-y-4"
-              >
-                <div className="w-full h-40 bg-slate-700/50 rounded-xl" />
-                <div className="w-3/4 h-6 bg-slate-700/50 rounded-md" />
-                <div className="w-1/2 h-4 bg-slate-700/50 rounded-md" />
-              </div>
+                className="h-64 md:h-80 rounded-2xl bg-slate-800/40 border border-slate-700/30 animate-pulse p-5 space-y-4"
+              />
             ))}
           </div>
         )}
 
-        {/* Empty State */}
-        {!loading && blogs.length === 0 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-24 backdrop-blur-md bg-slate-800/20 rounded-3xl border border-slate-800"
-          >
-            <p className="text-slate-300 text-2xl font-medium">No blogs found</p>
-            <p className="text-slate-500 mt-2">Be the first to share your story with the world.</p>
-          </motion.div>
-        )}
-
-        {/* Blog Grid */}
+        {/* 4. Blog Grid: grid-cols-1 for mobile is essential */}
         <motion.div 
           layout
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           <AnimatePresence mode='popLayout'>
             {blogs.map((blog, index) => (
               <motion.div
                 key={blog._id}
                 layout
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ 
                   duration: 0.4, 
-                  delay: index * 0.05,
-                  ease: [0.23, 1, 0.32, 1] 
+                  delay: index * 0.03, // Faster delay for mobile snappiness
+                  ease: "easeOut"
                 }}
-                className="group relative"
+                // 'active:scale-95' provides haptic-like visual feedback on touch
+                className="group relative active:scale-[0.98] transition-transform duration-200"
               >
-                {/* Glow Effect on Hover */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition duration-500" />
+                {/* Subtle outer glow for mobile */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500/20 to-purple-600/20 rounded-2xl blur-sm md:opacity-0 md:group-hover:opacity-100 transition duration-500" />
                 
-                <div className="relative h-full transition-transform duration-300 group-hover:-translate-y-2">
+                <div className="relative h-full">
                   <BlogCard
                     blog={blog}
                     user={user}
@@ -137,6 +125,9 @@ export default function Home() {
           </AnimatePresence>
         </motion.div>
       </div>
+
+      {/* 5. Mobile Floating Action Button (Optional) */}
+      {/* If you have a 'Create Post' route, a FAB is standard for mobile UI */}
     </div>
   );
 }
