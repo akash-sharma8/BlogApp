@@ -17,7 +17,7 @@ export default function Navbar() {
     `block px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300
      ${isActive ? "text-indigo-400" : "text-slate-300 hover:text-white"}`;
 
-     console.log("Navbar user:", user, "loading:", loading);
+    //  console.log("Navbar user:", user, "loading:", loading);
   return (
     <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,36 +31,24 @@ export default function Navbar() {
             BlogApp
           </NavLink>
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {user ? (
-              <>
-                <NavLink to="/write" className={linkStyle}>Write</NavLink>
-                <NavLink to="/myblogs" className={linkStyle}>My Blogs</NavLink>
-                <NavLink
-                  to="/profile"
-                  className="flex items-center gap-3 bg-gradient-to-r from-slate-700 to-slate-600 px-4 py-2 rounded-full hover:from-slate-600 hover:to-slate-500 transition-all duration-300 shadow-md"
-                >
-                  <span className="text-lg">👤</span> {user.username}
-                </NavLink>
-                <button
-                  onClick={handleLogout}
-                  className="text-red-400 hover:text-red-300 font-medium transition-all duration-300 hover:scale-105"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <NavLink to="/login" className={linkStyle}>Login</NavLink>
-                <NavLink
-                  to="/register"
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-2 rounded-lg text-white font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
-                >
-                  Sign Up
-                </NavLink>
-              </>
-            )}
-          </div>
+          {/* Desktop Menu */}
+<div className="hidden md:flex items-center space-x-8">
+  {loading ? (
+    <span className="text-slate-400">Loading...</span>
+  ) : user ? (
+    <>
+      <NavLink to="/write" className={linkStyle}>Write</NavLink>
+      <NavLink to="/myblogs" className={linkStyle}>My Blogs</NavLink>
+      <NavLink to="/profile" className="...">Profile</NavLink>
+      <button onClick={handleLogout} className="...">Logout</button>
+    </>
+  ) : (
+    <>
+      <NavLink to="/login" className={linkStyle}>Login</NavLink>
+      <NavLink to="/register" className="...">Sign Up</NavLink>
+    </>
+  )}
+</div>
 
           {/* Mobile Hamburger */}
           <div className="md:hidden">
