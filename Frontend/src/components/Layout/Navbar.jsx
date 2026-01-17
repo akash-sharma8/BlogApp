@@ -17,7 +17,7 @@ export default function Navbar() {
     `block px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300
      ${isActive ? "text-indigo-400" : "text-slate-300 hover:text-white"}`;
 
-    //  console.log("Navbar user:", user, "loading:", loading);
+  const buttonStyle = "block px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 text-slate-300 hover:text-white bg-transparent hover:bg-slate-700";
   return (
     <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,23 +32,23 @@ export default function Navbar() {
           </NavLink>
           {/* Desktop Menu */}
           {/* Desktop Menu */}
-<div className="hidden md:flex items-center space-x-8">
-  {loading ? (
-    <span className="text-slate-400">Loading...</span>
-  ) : user ? (
-    <>
-      <NavLink to="/write" className={linkStyle}>Write</NavLink>
-      <NavLink to="/myblogs" className={linkStyle}>My Blogs</NavLink>
-      <NavLink to="/profile" className="...">Profile</NavLink>
-      <button onClick={handleLogout} className="...">Logout</button>
-    </>
-  ) : (
-    <>
-      <NavLink to="/login" className={linkStyle}>Login</NavLink>
-      <NavLink to="/register" className="...">Sign Up</NavLink>
-    </>
-  )}
-</div>
+          <div className="hidden md:flex items-center space-x-8">
+            {loading ? (
+              <span className="text-slate-400">Loading...</span>
+            ) : user ? (
+              <>
+                <NavLink to="/write" className={linkStyle}>Write</NavLink>
+                <NavLink to="/myblogs" className={linkStyle}>My Blogs</NavLink>
+                <NavLink to="/profile" className={linkStyle}>Profile</NavLink>
+                <button onClick={handleLogout} className={buttonStyle}>Logout</button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className={linkStyle}>Login</NavLink>
+                <NavLink to="/register" className={linkStyle}>Sign Up</NavLink>
+              </>
+            )}
+          </div>
 
           {/* Mobile Hamburger */}
           <div className="md:hidden">
@@ -64,30 +64,30 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-<div
-  className={`md:hidden bg-gradient-to-b from-slate-900 to-slate-800 border-t border-slate-700 transition-all duration-500 ease-in-out shadow-inner
+      <div
+        className={`md:hidden bg-gradient-to-b from-slate-900 to-slate-800 border-t border-slate-700 transition-all duration-500 ease-in-out shadow-inner
   ${menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}
->
-  <div className="p-6 flex flex-col space-y-6">
-    {!loading && (
-      <>
-        {user ? (
-          <>
-            <NavLink to="/write" className={linkStyle} onClick={() => setMenuOpen(false)}>Write</NavLink>
-            <NavLink to="/myblogs" className={linkStyle} onClick={() => setMenuOpen(false)}>My Blogs</NavLink>
-            <NavLink to="/profile" className="..." onClick={() => setMenuOpen(false)}>Profile</NavLink>
-            <button onClick={handleLogout} className="...">Logout</button>
-          </>
-        ) : (
-          <>
-            <NavLink to="/login" className={linkStyle} onClick={() => setMenuOpen(false)}>Login</NavLink>
-            <NavLink to="/register" className="..." onClick={() => setMenuOpen(false)}>Sign Up</NavLink>
-          </>
-        )}
-      </>
-    )}
-  </div>
-</div>
+      >
+        <div className="p-6 flex flex-col space-y-6">
+          {!loading && (
+            <>
+              {user ? (
+                <>
+                  <NavLink to="/write" className={linkStyle} onClick={() => setMenuOpen(false)}>Write</NavLink>
+                  <NavLink to="/myblogs" className={linkStyle} onClick={() => setMenuOpen(false)}>My Blogs</NavLink>
+                  <NavLink to="/profile" className={linkStyle} onClick={() => setMenuOpen(false)}>Profile</NavLink>
+                  <button onClick={handleLogout} className={buttonStyle}>Logout</button>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/login" className={linkStyle} onClick={() => setMenuOpen(false)}>Login</NavLink>
+                  <NavLink to="/register" className={linkStyle} onClick={() => setMenuOpen(false)}>Sign Up</NavLink>
+                </>
+              )}
+            </>
+          )}
+        </div>
+      </div>
     </nav>
   );
 }
