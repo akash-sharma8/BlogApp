@@ -32,7 +32,7 @@ export default function Navbar() {
           </NavLink>
           {/* Desktop Menu */}
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             {loading ? (
               <span className="text-slate-400">Loading...</span>
             ) : user ? (
@@ -51,7 +51,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Hamburger */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="text-white text-2xl focus:outline-none hover:text-cyan-400 transition-colors duration-300"
@@ -65,7 +65,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden bg-gradient-to-b from-slate-900 to-slate-800 border-t border-slate-700 transition-all duration-500 ease-in-out shadow-inner
+        className={`lg:hidden bg-gradient-to-b from-slate-900 to-slate-800 border-t border-slate-700 transition-all duration-500 ease-in-out shadow-inner
   ${menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}
       >
         <div className="p-6 flex flex-col space-y-6">
