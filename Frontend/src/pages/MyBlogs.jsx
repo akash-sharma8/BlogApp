@@ -39,15 +39,24 @@ export default function MyBlogs() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-4xl font-extrabold mb-8 text-gray-800 text-center animate-fadeIn">
-        My Blogs
+    <div
+      className="max-w-6xl mx-auto p-6 bg-gradient-to-br from-gray-900 to-gray-800 
+                 min-h-screen rounded-xl shadow-lg border border-gray-700 relative"
+    >
+      {/* Subtle Glow Layer */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20 
+                      opacity-0 hover:opacity-30 transition-opacity duration-500 rounded-xl"></div>
+
+      <h1 className="text-4xl font-extrabold mb-8 text-gray-100 text-center animate-fadeIn">
+        📚 My Blogs
       </h1>
+
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {blogs.map((blog) => (
           <div
             key={blog._id}
-            className="transition-transform duration-300 hover:scale-105 hover:shadow-xl rounded-xl"
+            className="transition-transform duration-300 hover:scale-105 
+                       hover:shadow-xl rounded-xl"
           >
             <BlogCard
               blog={blog}
@@ -58,8 +67,9 @@ export default function MyBlogs() {
           </div>
         ))}
       </div>
+
       {blogs.length === 0 && (
-        <p className="text-center text-gray-500 mt-10 animate-fadeIn">
+        <p className="text-center text-gray-400 mt-10 animate-fadeIn">
           You haven’t written any blogs yet.
         </p>
       )}
