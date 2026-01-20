@@ -1,11 +1,16 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function Navbar() {
   const { user, logout, loading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // DEBUG: Log the values to see what's happening
+  useEffect(() => {
+    console.log("🔍 Navbar Debug:", { user, loading });
+  }, [user, loading]);
 
   const handleLogout = async () => {
     await logout();
