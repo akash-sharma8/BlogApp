@@ -8,7 +8,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
-    await logout(); // ensure async logout completes
+    await logout();
     setMenuOpen(false);
     navigate("/");
   };
@@ -45,7 +45,8 @@ export default function Navbar() {
                     to="/profile"
                     className="flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-full hover:bg-slate-700 transition"
                   >
-                    👤 {user.username}
+                    <span>👤</span>
+                    <span>{user.username}</span>
                   </NavLink>
                   <button
                     onClick={handleLogout}
@@ -71,74 +72,78 @@ export default function Navbar() {
           )}
 
           {/* Mobile Hamburger */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-white text-2xl focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? "✕" : "☰"}
-            </button>
-          </div>
+          {!loading && (
+            <div className="md:hidden">
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="text-white text-2xl focus:outline-none"
+                aria-label="Toggle menu"
+              >
+                {menuOpen ? "✕" : "☰"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`md:hidden bg-slate-900 border-t border-slate-800 transition-all duration-300 ease-in-out
-        ${menuOpen ? "h-auto opacity-100" : "h-0 opacity-0"} overflow-hidden`}
-      >
-        <div className="p-6 flex flex-col space-y-4">
-          {user ? (
-            <>
-              <NavLink
-                to="/write"
-                className={linkStyle}
-                onClick={() => setMenuOpen(false)}
-              >
-                Write
-              </NavLink>
-              <NavLink
-                to="/myblogs"
-                className={linkStyle}
-                onClick={() => setMenuOpen(false)}
-              >
-                My Blogs
-              </NavLink>
-              <NavLink
-                to="/profile"
-                className="bg-slate-800 px-4 py-2 rounded-lg"
-                onClick={() => setMenuOpen(false)}
-              >
-                👤 {user.username}
-              </NavLink>
-              <button
-                onClick={handleLogout}
-                className="mt-4 text-red-400 hover:text-red-300"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <NavLink
-                to="/login"
-                className={linkStyle}
-                onClick={() => setMenuOpen(false)}
-              >
-                Login
-              </NavLink>
-              <NavLink
-                to="/register"
-                className="bg-indigo-600 px-5 py-2 rounded-lg text-center text-white font-semibold hover:bg-indigo-500 transition"
-                onClick={() => setMenuOpen(false)}
-              >
-                Sign Up
-              </NavLink>
-            </>
-          )}
+      {!loading && (
+        <div
+          className={`md:hidden bg-slate-900 border-t border-slate-800 transition-all duration-300 ease-in-out overflow-hidden
+          ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+        >
+          <div className="p-6 flex flex-col space-y-4">
+            {user ? (
+              <>
+                <NavLink
+                  to="/write"
+                  className={linkStyle}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Write
+                </NavLink>
+                <NavLink
+                  to="/myblogs"
+                  className={linkStyle}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  My Blogs
+                </NavLink>
+                <NavLink
+                  to="/profile"
+                  className="bg-slate-800 px-4 py-2 rounded-lg hover:bg-slate-700 transition"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  👤 {user.username}
+                </NavLink>
+                <button
+                  onClick={handleLogout}
+                  className="mt-4 text-red-400 hover:text-red-300 text-left"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  className={linkStyle}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Login
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  className="bg-indigo-600 px-5 py-2 rounded-lg text-center text-white font-semibold hover:bg-indigo-500 transition"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Sign Up
+                </NavLink>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 }
