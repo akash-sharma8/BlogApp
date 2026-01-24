@@ -64,18 +64,18 @@ export default function BlogDetail() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-8 py-12 bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-gray-100">
+    <div className="max-w-4xl mx-auto px-4 md:px-8 py-12 bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-gray-100">
       
       {/* Blog Container */}
-      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-3xl shadow-xl p-10 border border-gray-700 hover:shadow-2xl transition-shadow duration-500">
+      <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-3xl shadow-xl p-8 md:p-10 border border-gray-700 hover:shadow-2xl transition-shadow duration-500">
         
         {/* Title */}
-        <h1 className="text-5xl font-extrabold mb-4 leading-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent break-words">
           {blog.title}
         </h1>
 
         {/* Author & Date */}
-        <div className="flex items-center gap-4 mb-10">
+        <div className="flex items-center gap-4 mb-8 md:mb-10">
           <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
             {blog.author?.username?.charAt(0).toUpperCase() || "U"}
           </div>
@@ -96,12 +96,12 @@ export default function BlogDetail() {
         </div>
 
         {/* Content */}
-        <article className="prose prose-lg max-w-none text-gray-200 leading-relaxed whitespace-pre-line mb-12">
+        <article className="prose prose-lg max-w-none text-gray-200 leading-relaxed whitespace-pre-line break-words mb-12 max-h-[700px] overflow-y-auto pr-4">
           {blog.content}
         </article>
 
         {/* Actions */}
-        <div className="flex items-center justify-between border-t border-gray-600 pt-8">
+        <div className="flex items-center justify-between border-t border-gray-600 pt-6 md:pt-8">
           <div className="flex items-center gap-6">
             <button
               onClick={handleLike}
@@ -137,7 +137,7 @@ export default function BlogDetail() {
         </div>
 
         {/* Comments Section */}
-        <div className="mt-12 border-t border-gray-600 pt-8">
+        <div className="mt-10 md:mt-12 border-t border-gray-600 pt-6 md:pt-8">
           
           {/* Toggle */}
           <button
@@ -159,13 +159,13 @@ export default function BlogDetail() {
           </button>
 
           {/* Comment List */}
-          <div className="mt-8 space-y-6">
+          <div className="mt-6 md:mt-8 space-y-4 max-h-[400px] overflow-y-auto pr-2">
             {blog.comments?.map((c, i) => (
               <div
                 key={i}
-                className="bg-gradient-to-r from-gray-800 to-gray-700 border border-gray-600 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300 animate-fadeIn"
+                className="bg-gradient-to-r from-gray-800 to-gray-700 border border-gray-600 rounded-2xl p-4 md:p-5 shadow-sm hover:shadow-md transition-shadow duration-300 animate-fadeIn break-words"
               >
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
                     {c.author?.username?.charAt(0).toUpperCase() || "U"}
                   </div>
@@ -173,14 +173,14 @@ export default function BlogDetail() {
                     {c.author?.username || "Unknown"}
                   </p>
                 </div>
-                <p className="text-gray-300 leading-relaxed">{c.content}</p>
+                <p className="text-gray-300 leading-relaxed break-words">{c.content}</p>
               </div>
             ))}
           </div>
 
           {/* Comment Input */}
           {user && showCommentBox && (
-            <div className="mt-8 flex gap-4 animate-slideUp">
+            <div className="mt-4 md:mt-8 flex flex-col md:flex-row gap-4 animate-slideUp">
               <div className="flex-1 relative">
                 <input
                   type="text"
