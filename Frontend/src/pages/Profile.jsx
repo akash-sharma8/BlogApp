@@ -9,7 +9,7 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchMyBlogs = async () => {
-      const res = await getBlogs(); // get all blogs and filter by owner
+      const res = await getBlogs(); 
       setBlogs(res.data.blogs.filter((b) => b.author._id === user._id));
     };
     fetchMyBlogs();

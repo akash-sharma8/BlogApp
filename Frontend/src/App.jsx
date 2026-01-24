@@ -14,10 +14,10 @@ import EditBlog from './pages/EditBlog';
 import MyBlogs from './pages/MyBlogs';
 
 
-// Auth
+
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
-import PrivateRoute from './components/Auth/PrivateRoute'; // ✅ import, do not redeclare
+import PrivateRoute from './components/Auth/PrivateRoute'; 
 
 function App() {
   return (

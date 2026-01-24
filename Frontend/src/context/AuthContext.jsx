@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
       console.error("Error parsing user from localStorage:", error);
       localStorage.removeItem("user");
     } finally {
-      // CRITICAL: Always set loading to false, even if there's an error
       setLoading(false);
     }
   }, []);

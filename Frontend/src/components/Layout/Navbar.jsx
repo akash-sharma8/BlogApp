@@ -21,7 +21,6 @@ export default function Navbar() {
     <nav className="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          {/* Logo */}
           <NavLink
             to="/"
             className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400"
@@ -29,7 +28,6 @@ export default function Navbar() {
             BlogApp
           </NavLink>
 
-          {/* Desktop Menu - ALWAYS VISIBLE */}
           <div className="hidden md:block">
             <div className="flex items-center space-x-6">
               {user ? (
@@ -70,7 +68,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Hamburger - ALWAYS VISIBLE */}
           <div className="block md:hidden">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -83,7 +80,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`block md:hidden bg-slate-900 border-t border-slate-800 transition-all duration-300 ease-in-out overflow-hidden
         ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}

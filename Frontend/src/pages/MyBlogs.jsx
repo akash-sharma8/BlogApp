@@ -43,7 +43,6 @@ export default function MyBlogs() {
       className="max-w-6xl mx-auto p-6 bg-gradient-to-br from-gray-900 to-gray-800 
                  min-h-screen rounded-xl shadow-lg border border-gray-700 relative"
     >
-      {/* Subtle Glow Layer */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20 
                       opacity-0 hover:opacity-30 transition-opacity duration-500 rounded-xl"></div>
 

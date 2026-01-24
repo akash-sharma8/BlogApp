@@ -53,7 +53,6 @@ export default function Register() {
           Create Account
         </h2>
 
-        {/* Error */}
         {error && (
           <p className="mb-4 text-center text-red-500 bg-red-50 py-2 rounded
                         animate-shake">
@@ -61,7 +60,6 @@ export default function Register() {
           </p>
         )}
 
-        {/* Username */}
         <div className="mb-4">
           <input
             type="text"
@@ -75,7 +73,6 @@ export default function Register() {
           />
         </div>
 
-        {/* Email */}
         <div className="mb-4">
           <input
             type="email"
@@ -89,7 +86,6 @@ export default function Register() {
           />
         </div>
 
-        {/* Password */}
         <div className="mb-6">
           <input
             type="password"
@@ -103,7 +99,6 @@ export default function Register() {
           />
         </div>
 
-        {/* Button */}
         <button
           type="submit"
           disabled={loading}
@@ -115,7 +110,6 @@ export default function Register() {
           {loading ? "Creating account..." : "Register"}
         </button>
 
-        {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <Link to="/login" className="text-green-600 font-medium hover:underline">

@@ -50,10 +50,8 @@ export default function Home() {
   };
 
   return (
-    // 'selection:bg-indigo-500/30' is great for desktop, 'overflow-x-hidden' is vital for mobile
     <div className="min-h-screen bg-[#0f172a] text-slate-200 overflow-x-hidden pb-12">
       
-      {/* 1. Mobile-Optimized Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-[5%] -left-[10%] w-[70%] h-[30%] rounded-full bg-indigo-600/20 blur-[80px] md:blur-[120px]" />
         <div className="absolute bottom-[10%] -right-[10%] w-[60%] h-[30%] rounded-full bg-purple-600/15 blur-[80px] md:blur-[100px]" />
@@ -61,7 +59,6 @@ export default function Home() {
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-16">
         
-        {/* 2. Header: Smaller font sizes for mobile to prevent weird wrapping */}
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,7 +73,6 @@ export default function Home() {
           </p>
         </motion.div>
 
-        {/* 3. Loading State: Skeleton height adjusted for small screens */}
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[...Array(4)].map((_, i) => (
@@ -88,7 +84,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* 4. Blog Grid: grid-cols-1 for mobile is essential */}
         <motion.div 
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
@@ -103,13 +98,11 @@ export default function Home() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ 
                   duration: 0.4, 
-                  delay: index * 0.03, // Faster delay for mobile snappiness
+                  delay: index * 0.03, 
                   ease: "easeOut"
                 }}
-                // 'active:scale-95' provides haptic-like visual feedback on touch
                 className="group relative active:scale-[0.98] transition-transform duration-200"
               >
-                {/* Subtle outer glow for mobile */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500/20 to-purple-600/20 rounded-2xl blur-sm md:opacity-0 md:group-hover:opacity-100 transition duration-500" />
                 
                 <div className="relative h-full">
@@ -126,8 +119,6 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* 5. Mobile Floating Action Button (Optional) */}
-      {/* If you have a 'Create Post' route, a FAB is standard for mobile UI */}
     </div>
   );
 }

@@ -13,7 +13,7 @@ const { login, user } = useContext(AuthContext);
 
 useEffect(() => {
     if (user) {
-      navigate("/"); // or "/profile" or "/myblogs" wherever you want
+      navigate("/"); 
     }
   }, [user, navigate]);
 
@@ -44,7 +44,6 @@ useEffect(() => {
           Welcome Back 
         </h2>
 
-        {/* Error */}
         {error && (
           <p className="mb-4 text-center text-red-500 bg-red-50 py-2 rounded
                         animate-shake">
@@ -52,7 +51,6 @@ useEffect(() => {
           </p>
         )}
 
-        {/* Email */}
         <div className="mb-4">
           <input
             type="email"
@@ -66,7 +64,6 @@ useEffect(() => {
           />
         </div>
 
-        {/* Password */}
         <div className="mb-6">
           <input
             type="password"
@@ -80,7 +77,6 @@ useEffect(() => {
           />
         </div>
 
-        {/* Button */}
         <button
           type="submit"
           disabled={loading}
@@ -92,7 +88,6 @@ useEffect(() => {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don’t have an account?{" "}
           <Link to="/register" className="text-blue-600 font-medium hover:underline">
