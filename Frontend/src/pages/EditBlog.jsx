@@ -10,53 +10,24 @@ export default function EditBlog() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchBlog = async () => {
-      try {
-        const res = await getSingleBlog(id);
-
-        const blog = res.data.blog || res.data; 
-
-        if (blog.author?._id !== user?._id && blog.author?._id !== user?.userId) {
-          navigate("/"); 
-          return;
-        }
-
-        // Set state so textarea/input shows content
-        setTitle(blog.title);
-        setContent(blog.content);
-      } catch (err) {
-        console.error("Failed to fetch blog:", err);
-        navigate("/"); // redirect on error
-      } finally {
-        setLoading(false);
+      const res = await getSingleBlog(id);
+      if (res.data.author._id !== user.userId) {
+        navigate("/");
       }
+      setTitle(res.data.title);
+      setContent(res.data.content);
     };
-
-    if (user) fetchBlog();
+    fetchBlog();
   }, [id, user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await updateBlog(id, { title, content });
-      navigate(`/blog/${id}`);
-    } catch (err) {
-      console.error("Failed to update blog:", err);
-    }
+    await updateBlog(id, { title, content });
+    navigate(`/`);
   };
-
-  if (loading) {
-    return (
-      <div className="max-w-3xl mx-auto p-8 text-gray-300 animate-pulse">
-        <div className="h-6 bg-gray-700 rounded mb-4 w-3/4"></div>
-        <div className="h-32 bg-gray-700 rounded mb-4 w-full"></div>
-        <div className="h-10 bg-gray-700 rounded w-1/3"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-3xl mx-auto p-8 bg-gradient-to-br from-gray-900 to-gray-800 shadow-xl rounded-2xl mt-10 transition-all duration-500 ease-in-out hover:scale-[1.01] border border-gray-700 relative text-gray-100">
@@ -80,9 +51,9 @@ export default function EditBlog() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write your content here..."
-          className="w-full border border-gray-600 bg-gray-800 text-gray-200 p-3 rounded-xl h-64 resize-none 
+          className="w-full border border-gray-600 bg-gray-800 text-gray-200 p-3 rounded-xl h-48 resize-none 
                      focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent 
-                     transition duration-300 ease-in-out shadow-sm hover:shadow-md placeholder-gray-500 break-words"
+                     transition duration-300 ease-in-out shadow-sm hover:shadow-md placeholder-gray-500"
         />
         <button
           type="submit"
