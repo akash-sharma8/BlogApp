@@ -21,16 +21,22 @@ export default function EditBlog() {
         
         console.log("API Response:", res);
         
-        // ✅ FIX: Access blog data from res.data.blog
         const blogData = res.data.blog;
         
         console.log("Blog Data:", blogData);
+        console.log("Blog Author ID:", blogData.author?._id);
+        console.log("Current User:", user);
+        console.log("Current User ID:", user?.userId);
+        console.log("User ID match:", blogData.author?._id === user?.userId);
         
-        // Authorization check
+        // Authorization check - Compare the IDs
         if (blogData.author?._id !== user?.userId) {
+          console.log("Authorization failed - redirecting to home");
           navigate("/");
           return;
         }
+        
+        console.log("Authorization passed - setting blog data");
         
         // Set the values
         setTitle(blogData.title || "");
