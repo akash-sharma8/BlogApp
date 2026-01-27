@@ -19,18 +19,21 @@ export default function EditBlog() {
         setLoading(true);
         const res = await getSingleBlog(id);
         
-        console.log("API Response:", res);
-        
         const blogData = res.data.blog;
         
-        console.log("Blog Data:", blogData);
-        console.log("Blog Author ID:", blogData.author?._id);
-        console.log("Current User:", user);
-        console.log("Current User ID:", user?.userId);
-        console.log("User ID match:", blogData.author?._id === user?.userId);
+        // 🔍 DEBUG: Let's see ALL properties of the user object
+        console.log("Full User Object:", user);
+        console.log("User keys:", Object.keys(user || {}));
         
-        // Authorization check - Compare the IDs
-        if (blogData.author?._id !== user?.userId) {
+        // Try different possible property names
+        const currentUserId = user?.userId || user?.id || user?._id;
+        
+        console.log("Blog Author ID:", blogData.author?._id);
+        console.log("Detected Current User ID:", currentUserId);
+        console.log("User ID match:", blogData.author?._id === currentUserId);
+        
+        // Authorization check with flexible ID detection
+        if (blogData.author?._id !== currentUserId) {
           console.log("Authorization failed - redirecting to home");
           navigate("/");
           return;
