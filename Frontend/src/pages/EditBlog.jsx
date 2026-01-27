@@ -7,59 +7,107 @@ export default function EditBlog() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-
+  
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBlog = async () => {
-      const res = await getSingleBlog(id);
-      if (res.data.author._id !== user.userId) {
-        navigate("/");
+      try {
+        setLoading(true);
+        const res = await getSingleBlog(id);
+        
+        // Debug: Log the response to see its structure
+        console.log("API Response:", res);
+        
+        // Check different possible response structures
+        const blogData = res.data || res;
+        
+        // Authorization check
+        if (blogData.author?._id !== user?.userId) {
+          navigate("/");
+          return;
+        }
+        
+        // Set the values
+        setTitle(blogData.title || "");
+        setContent(blogData.content || "");
+        
+      } catch (err) {
+        console.error("Error fetching blog:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
-      setTitle(res.data.title);
-      setContent(res.data.content);
     };
-    fetchBlog();
+
+    if (id && user) {
+      fetchBlog();
+    }
   }, [id, user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateBlog(id, { title, content });
-    navigate(`/`);
+    try {
+      await updateBlog(id, { title, content });
+      navigate(`/`);
+    } catch (err) {
+      console.error("Error updating blog:", err);
+      setError(err.message);
+    }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-300 text-xl">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <p className="text-red-400 text-xl">Error: {error}</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-gradient-to-br from-gray-900 to-gray-800 shadow-xl rounded-2xl mt-10 transition-all duration-500 ease-in-out hover:scale-[1.01] border border-gray-700 relative text-gray-100">
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6 relative overflow-hidden">
       {/* Subtle Glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20 opacity-0 hover:opacity-30 transition-opacity duration-500 rounded-2xl"></div>
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-      <h1 className="text-3xl font-extrabold mb-6 text-center animate-fadeIn bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-        ✏️ Edit Blog
-      </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-2xl space-y-6 relative z-10 border border-gray-700"
+      >
+        <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-8">
+          ✏️ Edit Blog
+        </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-6 relative">
         <input
+          type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter blog title"
-          className="w-full border border-gray-600 bg-gray-800 text-gray-200 p-3 rounded-xl 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent 
-                     transition duration-300 ease-in-out shadow-sm hover:shadow-md placeholder-gray-500"
+          required
+          className="w-full border border-gray-600 bg-gray-800 text-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out shadow-sm hover:shadow-md placeholder-gray-500"
         />
+
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write your content here..."
-          className="w-full border border-gray-600 bg-gray-800 text-gray-200 p-3 rounded-xl h-48 resize-none 
-                     focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent 
-                     transition duration-300 ease-in-out shadow-sm hover:shadow-md placeholder-gray-500"
+          required
+          className="w-full border border-gray-600 bg-gray-800 text-gray-200 p-3 rounded-xl h-48 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-300 ease-in-out shadow-sm hover:shadow-md placeholder-gray-500"
         />
+
         <button
           type="submit"
-          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold w-full 
-                     hover:from-blue-500 hover:to-purple-500 hover:scale-105 transition-transform duration-300 ease-in-out 
-                     shadow-md hover:shadow-lg"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold w-full hover:from-blue-500 hover:to-purple-500 hover:scale-105 transition-transform duration-300 ease-in-out shadow-md hover:shadow-lg"
         >
           Update
         </button>
