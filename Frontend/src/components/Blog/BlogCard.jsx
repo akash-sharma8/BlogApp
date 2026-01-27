@@ -13,7 +13,7 @@ export default function BlogCard({ blog, user, onDelete, onLike }) {
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20 
                       opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
 
-  
+      {/* Title and Author */}
       <div className="relative mb-4">
         <h2 className="text-2xl font-bold text-gray-100 group-hover:text-blue-400 
                        transition-colors duration-300 leading-tight">
@@ -32,12 +32,9 @@ export default function BlogCard({ blog, user, onDelete, onLike }) {
         </p>
       </div>
 
-    
-      <p className="relative text-gray-300 leading-relaxed mb-5 line-clamp-3">
-        {blog.content.slice(0, 150)}...
-      </p>
+      {/* ❌ REMOVED: Content preview section */}
 
-      
+      {/* Read More Link */}
       <Link
         to={`/blog/${blog._id}`}
         className="relative inline-flex items-center gap-2 text-blue-400 font-semibold text-sm 
@@ -58,13 +55,13 @@ export default function BlogCard({ blog, user, onDelete, onLike }) {
         </svg>
       </Link>
 
-  
+      {/* Divider */}
       <div className="relative my-5 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent" />
 
-    
+      {/* Actions */}
       <div className="relative flex justify-between items-center">
         <div className="flex gap-6">
-      
+          {/* Like Button */}
           <button
             onClick={() => onLike(blog._id)}
             className="flex items-center gap-2 text-red-400 hover:text-red-500 
@@ -82,6 +79,7 @@ export default function BlogCard({ blog, user, onDelete, onLike }) {
             <span className="text-sm font-medium">{blog.likes?.length || 0}</span>
           </button>
 
+          {/* Comments Link */}
           <Link
             to={`/blog/${blog._id}`}
             className="flex items-center gap-2 text-gray-400 hover:text-blue-400 
@@ -98,6 +96,7 @@ export default function BlogCard({ blog, user, onDelete, onLike }) {
           </Link>
         </div>
 
+        {/* Edit/Delete buttons for owner */}
         {isOwner && (
           <div className="flex gap-4 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <Link

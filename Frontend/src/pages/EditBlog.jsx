@@ -21,25 +21,11 @@ export default function EditBlog() {
         
         const blogData = res.data.blog;
         
-        // 🔍 DEBUG: Let's see ALL properties of the user object
-        console.log("Full User Object:", user);
-        console.log("User keys:", Object.keys(user || {}));
-        
-        // Try different possible property names
-        const currentUserId = user?.userId || user?.id || user?._id;
-        
-        console.log("Blog Author ID:", blogData.author?._id);
-        console.log("Detected Current User ID:", currentUserId);
-        console.log("User ID match:", blogData.author?._id === currentUserId);
-        
-        // Authorization check with flexible ID detection
-        if (blogData.author?._id !== currentUserId) {
-          console.log("Authorization failed - redirecting to home");
+        // ✅ FIX: Use user.id instead of user.userId
+        if (blogData.author?._id !== user?.id) {
           navigate("/");
           return;
         }
-        
-        console.log("Authorization passed - setting blog data");
         
         // Set the values
         setTitle(blogData.title || "");
