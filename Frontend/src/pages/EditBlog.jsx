@@ -19,11 +19,12 @@ export default function EditBlog() {
         setLoading(true);
         const res = await getSingleBlog(id);
         
-        // Debug: Log the response to see its structure
         console.log("API Response:", res);
         
-        // Check different possible response structures
-        const blogData = res.data || res;
+        // ✅ FIX: Access blog data from res.data.blog
+        const blogData = res.data.blog;
+        
+        console.log("Blog Data:", blogData);
         
         // Authorization check
         if (blogData.author?._id !== user?.userId) {
